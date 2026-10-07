@@ -1,0 +1,11 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+.DS_Store
+reports/*
+!reports/.gitkeep
+.orchestrate/*
+!.orchestrate/README.md
+.claude/launch.json
+.claude/settings.local.json

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Code Reviewer</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%234f46e5'/%3E%3Cpath d='M12 10l-6 6 6 6M20 10l6 6-6 6' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">⟨/⟩</span> AI Code Reviewer</div>
+    <span class="muted small">Style · Bugs · Security · Refactors · Tests</span>
+  </header>
+
+  <div class="layout">
+    <aside class="history">
+      <h2>History</h2>
+      <ul id="history-list"><li class="muted small">No reviews yet</li></ul>
+    </aside>
+
+    <main>
+      <section class="card input-card">
+        <div class="tabs" role="tablist" id="input-tabs">
+          <button role="tab" class="tab active" data-input="github">GitHub URL</button>
+          <button role="tab" class="tab" data-input="paste">Paste code</button>
+          <button role="tab" class="tab" data-input="upload">Upload file</button>
+        </div>
+        <form id="review-form">
+          <div class="input-pane" data-pane="github">
+            <input id="url" type="url" placeholder="https://github.com/owner/repo/blob/main/file.py"
+                   value="https://github.com/zehavit1986/ai4dev-agent-files/blob/main/10-messages.py">
+          </div>
+          <div class="input-pane" data-pane="paste" hidden>
+            <input id="paste-filename" type="text" placeholder="Filename (e.g. app.py) — used to detect the language">
+            <textarea id="paste-code" rows="10" placeholder="Paste your code here…" spellcheck="false"></textarea>
+          </div>
+          <div class="input-pane" data-pane="upload" hidden>
+            <input id="file" type="file">
+          </div>
+          <div class="actions">
+            <button type="submit" id="submit" class="primary">Review code</button>
+            <span id="status" class="muted small" role="status"></span>
+          </div>
+        </form>
+      </section>
+
+      <div id="error" class="card error" hidden></div>
+
+      <section id="results" hidden>
+        <div class="card overview">
+          <div class="gauge" id="gauge">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <circle cx="60" cy="60" r="52" class="gauge-track"/>
+              <circle cx="60" cy="60" r="52" class="gauge-fill" id="gauge-fill"/>
+            </svg>
+            <div class="gauge-label"><span id="score">–</span><span id="grade" class="grade"></span></div>
+          </div>
+          <div class="overview-body">
+            <div class="overview-head">
+              <h1 id="file-title"></h1>
+              <div class="export">
+                <a id="export-md" class="button" href="#">Export .md</a>
+                <a id="export-json" class="button" href="#">Export .json</a>
+              </div>
+            </div>
+            <p id="meta" class="muted small"></p>
+            <p id="summary"></p>
+            <div class="counts" id="counts"></div>
+            <div class="metrics" id="metrics"></div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card findings">
+            <div class="tabs" role="tablist" id="result-tabs"></div>
+            <div id="tab-body"></div>
+          </div>
+          <div class="card code-card">
+            <div class="code-head"><span id="code-filename"></span><span class="muted small">Flagged lines are highlighted</span></div>
+            <div class="code" id="code"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
