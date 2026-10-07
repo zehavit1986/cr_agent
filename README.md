@@ -61,6 +61,20 @@ http://localhost:3000/
 url: https://github.com/zehavit1986/ai4dev-agent-files
 
 
-https://github.com/zehavit1986/cr_agent
+## https://github.com/zehavit1986/cr_agent
+
+cd /Users/zcohen/Projects/cr_agent
+
+git init -b feat/initial-upload
+
+git remote add origin https://github.com/zehavit1986/cr_agent.git
+
+git add .
+
+git status --short
+
+git commit -m "add project files"
+
+git push -u origin feat/initial-upload
 
 
